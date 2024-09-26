@@ -37,7 +37,7 @@ const ProfilePage = () => {
     return response; // Đảm bảo trả về giá trị từ API
   });
   const { data, isPending, isSuccess, isError } = mutation;
-  console.log("data", data);
+  // console.log("data", data);
 
   useEffect(() => {
     setEmail(user?.email);

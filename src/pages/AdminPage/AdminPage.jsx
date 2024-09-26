@@ -1,11 +1,7 @@
-import { Menu } from "antd";
+import { Menu, Spin } from "antd";
 import React, { useState } from "react";
 import { getItem } from "../../utils";
-import {
-  AppstoreOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, UserOutlined } from "@ant-design/icons";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import AdminUser from "../../components/AdminUser/AdminUser";
 import AdminProduct from "../../components/AdminProduct/AdminProduct";
@@ -17,6 +13,7 @@ const AdminPage = () => {
   ];
 
   const [keySelected, setKeySelected] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const renderPage = (key) => {
     switch (key) {
@@ -30,9 +27,14 @@ const AdminPage = () => {
   };
 
   const handleOnClick = ({ key }) => {
+    setLoading(true); // Bắt đầu trạng thái loading
     setKeySelected(key);
+
+    // Mô phỏng quá trình tải dữ liệu (bạn có thể thay bằng API thực)
+    setTimeout(() => {
+      setLoading(false); // Kết thúc trạng thái loading khi dữ liệu đã sẵn sàng
+    }, 2000);
   };
-  console.log("keySelected", keySelected);
 
   return (
     <>
@@ -49,7 +51,13 @@ const AdminPage = () => {
           onClick={handleOnClick}
         />
         <div style={{ flex: 1, padding: "15px" }}>
-          {renderPage(keySelected)}
+          {loading ? (
+            <div style={{ textAlign: "center", paddingTop: "50px" }}>
+              <Spin size="large" />
+            </div>
+          ) : (
+            renderPage(keySelected)
+          )}
         </div>
       </div>
     </>

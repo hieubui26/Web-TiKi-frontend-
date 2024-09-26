@@ -1,8 +1,9 @@
 import axios from "axios";
 
-export const axiosJWT = axios.create({
-  baseURL: process.env.REACT_APP_API_URL, // Đảm bảo rằng biến môi trường này đúng
-});
+export const axiosJWT = axios.create();
+// {
+//   baseURL: process.env.REACT_APP_API_URL, // Đảm bảo rằng biến môi trường này đúng
+// });
 
 export const loginUser = async (data) => {
   const res = await axios.post(
@@ -23,6 +24,30 @@ export const signupUser = async (data) => {
 export const getDetailsUser = async (id, access_token) => {
   const res = await axiosJWT.get(
     `${process.env.REACT_APP_API_URL}/user/get-details/${id}`,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+  return res.data;
+};
+
+export const getAllUser = async (access_token) => {
+  const res = await axiosJWT.get(
+    `${process.env.REACT_APP_API_URL}/user/getAll`,
+    {
+      headers: {
+        token: `Bearer ${access_token}`,
+      },
+    }
+  );
+  return res.data;
+};
+export const deleteUser = async (id, access_token, data) => {
+  const res = await axiosJWT.delete(
+    `${process.env.REACT_APP_API_URL}/user/delete-user/${id}`,
+    data,
     {
       headers: {
         token: `Bearer ${access_token}`,
